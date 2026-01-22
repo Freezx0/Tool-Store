@@ -1,8 +1,10 @@
 import React from 'react';
 import { Hammer, Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useStore } from '../store';
 
 export const Footer: React.FC = () => {
+  const { t } = useStore();
   return (
     <footer className="bg-slate-900 text-slate-300 border-t border-slate-800">
       <div className="container mx-auto px-4 py-16">
@@ -17,8 +19,7 @@ export const Footer: React.FC = () => {
               <span className="text-xl font-extrabold text-white">TOOL<span className="text-brand-500">STORE</span></span>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Ваш надежный партнер в мире профессионального инструмента. 
-              Работаем для строителей, механиков и мастеров с 2010 года.
+              {t('footer.desc')}
             </p>
             <div className="flex gap-4">
               {[Facebook, Twitter, Instagram].map((Icon, i) => (
@@ -31,30 +32,30 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-bold mb-6">Навигация</h3>
+            <h3 className="text-white font-bold mb-6">{t('footer.navTitle')}</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/catalog" className="hover:text-brand-500 transition-colors">Каталог</Link></li>
-              <li><Link to="/brands" className="hover:text-brand-500 transition-colors">Бренды</Link></li>
-              <li><Link to="/promotions" className="hover:text-brand-500 transition-colors">Акции</Link></li>
-              <li><Link to="/news" className="hover:text-brand-500 transition-colors">Новости</Link></li>
-              <li><Link to="/contacts" className="hover:text-brand-500 transition-colors">Контакты</Link></li>
+              <li><Link to="/catalog" className="hover:text-brand-500 transition-colors">{t('nav.catalog')}</Link></li>
+              <li><Link to="/brands" className="hover:text-brand-500 transition-colors">{t('nav.brands')}</Link></li>
+              <li><Link to="/promotions" className="hover:text-brand-500 transition-colors">{t('nav.promotions')}</Link></li>
+              <li><Link to="/news" className="hover:text-brand-500 transition-colors">{t('nav.news')}</Link></li>
+              <li><Link to="/contacts" className="hover:text-brand-500 transition-colors">{t('nav.contacts')}</Link></li>
             </ul>
           </div>
 
           {/* Customer Service */}
           <div>
-            <h3 className="text-white font-bold mb-6">Покупателям</h3>
+            <h3 className="text-white font-bold mb-6">{t('footer.customerTitle')}</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/contacts" className="hover:text-brand-500 transition-colors">Магазины</Link></li>
-              <li><a href="#" className="hover:text-brand-500 transition-colors">Доставка и оплата</a></li>
-              <li><a href="#" className="hover:text-brand-500 transition-colors">Возврат</a></li>
-              <li><a href="#" className="hover:text-brand-500 transition-colors">Гарантия</a></li>
+              <li><Link to="/contacts" className="hover:text-brand-500 transition-colors">{t('nav.contacts')}</Link></li>
+              <li><a href="#" className="hover:text-brand-500 transition-colors">{t('footer.shippingAndPayment')}</a></li>
+              <li><a href="#" className="hover:text-brand-500 transition-colors">{t('footer.returns')}</a></li>
+              <li><a href="#" className="hover:text-brand-500 transition-colors">{t('footer.warranty')}</a></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-white font-bold mb-6">Контакты</h3>
+            <h3 className="text-white font-bold mb-6">{t('footer.contactsTitle')}</h3>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-brand-500 shrink-0" />
@@ -74,10 +75,10 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="mt-16 pt-8 border-t border-slate-800 text-center text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>&copy; 2026 ToolStore Pro. Все права защищены.</p>
+          <p>{t('footer.copyright')}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white">Политика конфиденциальности</a>
-            <a href="#" className="hover:text-white">Публичная оферта</a>
+            <a href="#" className="hover:text-white">{t('footer.privacy')}</a>
+            <a href="#" className="hover:text-white">{t('footer.terms')}</a>
           </div>
         </div>
       </div>

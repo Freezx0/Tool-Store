@@ -1,9 +1,58 @@
+
 <!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ToolStore Pro - Профессиональный инструмент</title>
+    <title>ToolStore Pro | Final Version</title>
+    <style>
+      :root {
+        --brand-color: 249 115 22; /* Default Industrial Orange */
+      }
+      
+      /* Smooth transitions for theme and color changes */
+      * {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.1s ease;
+      }
+
+      /* Custom Scrollbar using Brand Color */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(var(--brand-color));
+        border-radius: 5px;
+        border: 2px solid #0f172a;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(var(--brand-color) / 0.8);
+      }
+    </style>
+    <script>
+      (function() {
+        function patchStorage(name) {
+          try {
+            var key = '__test__';
+            window[name].setItem(key, key);
+            window[name].removeItem(key);
+          } catch (e) {
+            var data = {};
+            Object.defineProperty(window, name, { value: {
+              getItem: function(k) { return data[k] || null; },
+              setItem: function(k, v) { data[k] = String(v); },
+              removeItem: function(k) { delete data[k]; },
+              clear: function() { data = {}; },
+              length: 0
+            }, configurable: true });
+          }
+        }
+        patchStorage('localStorage');
+        patchStorage('sessionStorage');
+      })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -12,64 +61,40 @@
           extend: {
             colors: {
               brand: {
-                50: '#fff7ed',
-                100: '#ffedd5',
-                200: '#fed7aa',
-                300: '#fdba74',
-                400: '#fb923c',
-                500: '#f97316', // Primary Orange
-                600: '#ea580c',
-                700: '#c2410c',
-                800: '#9a3412',
-                900: '#7c2d12',
-              },
-              dark: {
-                800: '#1e293b',
-                900: '#0f172a', // Dark Slate
-                950: '#020617',
+                50: 'rgb(var(--brand-color) / 0.05)',
+                100: 'rgb(var(--brand-color) / 0.1)',
+                200: 'rgb(var(--brand-color) / 0.2)',
+                300: 'rgb(var(--brand-color) / 0.4)',
+                400: 'rgb(var(--brand-color) / 0.7)',
+                500: 'rgb(var(--brand-color))',
+                600: 'rgb(var(--brand-color) / 0.9)',
+                700: 'rgb(var(--brand-color) / 0.8)',
               }
             },
-            fontFamily: {
-              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+            animation: {
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             }
           }
         }
       }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
+    <script type="importmap">
+    {
+      "imports": {
+        "lucide-react": "https://esm.sh/lucide-react@0.344.0?deps=react@18.2.0",
+        "react": "https://esm.sh/react@18.2.0",
+        "react/": "https://esm.sh/react@18.2.0/",
+        "react-dom": "https://esm.sh/react-dom@18.2.0",
+        "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+        "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?deps=react@18.2.0,react-dom@18.2.0",
+        "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
       }
-      /* Custom scrollbar for industrial look */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #1e293b;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #475569;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #f97316;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@0.344.0?deps=react@18.2.0",
-    "react": "https://esm.sh/react@18.2.0",
-    "react/": "https://esm.sh/react@18.2.0/",
-    "react-dom": "https://esm.sh/react-dom@18.2.0",
-    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?deps=react@18.2.0,react-dom@18.2.0"
-  }
-}
-</script>
-</head>
-  <body class="bg-gray-50 text-slate-900 dark:bg-dark-950 dark:text-gray-100 transition-colors duration-300">
+    }
+    </script>
+  </head>
+  <body class="bg-gray-50 text-slate-900 dark:bg-slate-950 dark:text-gray-100 transition-colors duration-300 antialiased selection:bg-brand-500 selection:text-white">
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

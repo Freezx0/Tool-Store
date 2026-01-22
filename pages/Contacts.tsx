@@ -1,8 +1,21 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, Navigation, Send, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Navigation, Send, MessageSquare, ExternalLink } from 'lucide-react';
 import { Button } from '../components/Button';
 
 export const ContactsPage: React.FC = () => {
+  const handleOpenMap = () => {
+    try {
+      const url = 'https://yandex.ru/maps/-/CDRiy-1S';
+      const win = window.open(url, '_blank');
+      // If window.open was blocked or failed
+      if (!win) {
+        console.warn('Window.open blocked');
+      }
+    } catch (e) {
+      console.warn('Could not open map due to security restrictions', e);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Header Section */}
@@ -76,18 +89,15 @@ export const ContactsPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Map Column */}
-            <div className="relative h-[500px] lg:h-auto bg-slate-200 dark:bg-slate-800">
-               <iframe 
-                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.584980068564!2d37.53658257723708!3d55.74836699233634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54bdc2069e893%3A0x63102170364f9f4!2z0JzQvtGB0LrQstCwLdCh0LjRgtC4!5e0!3m2!1sru!2sru!4v1710335432000!5m2!1sru!2sru" 
-                 width="100%" 
-                 height="100%" 
-                 style={{ border: 0 }} 
-                 allowFullScreen={true} 
-                 loading="lazy" 
-                 referrerPolicy="no-referrer-when-downgrade"
-                 className="absolute inset-0 grayscale hover:grayscale-0 transition-all duration-500"
-               ></iframe>
+            {/* Map Column (Static Image) */}
+            <div className="relative h-[500px] lg:h-auto bg-slate-200 dark:bg-slate-800 overflow-hidden group">
+               {/* Static Map Image to prevent Iframe SecurityError */}
+               <img 
+                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80" 
+                 alt="Map Location" 
+                 className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+               />
+               <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
                
                {/* Overlay Info Card */}
                <div className="absolute bottom-6 left-6 right-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur p-4 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center gap-4">
@@ -98,8 +108,8 @@ export const ContactsPage: React.FC = () => {
                     <p className="text-sm font-bold text-slate-900 dark:text-white">Как добраться?</p>
                     <p className="text-xs text-slate-500">Метро "Выставочная", выход 4</p>
                   </div>
-                  <Button size="sm" variant="outline" className="shrink-0" onClick={() => window.open('https://yandex.ru/maps/-/CDRiy-1S', '_blank')}>
-                    Маршрут
+                  <Button size="sm" variant="primary" className="shrink-0 gap-2" onClick={handleOpenMap}>
+                    Открыть карту <ExternalLink className="w-3 h-3" />
                   </Button>
                </div>
             </div>

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { MemoryRouter as Router, Routes, Route, Outlet, useLocation, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Outlet, useLocation, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
+import { AIConsultant } from './components/AIConsultant';
 import { StoreProvider, useStore } from './store';
 import { HomePage } from './pages/Home';
 import { CatalogPage } from './pages/Catalog';
@@ -15,19 +16,24 @@ import { LoginPage } from './pages/Login';
 import { RegisterPage } from './pages/Register';
 import { NewsPage } from './pages/News';
 import { ContactsPage } from './pages/Contacts';
+import { SettingsPage } from './pages/Settings';
 
+// Fault-tolerant scroll restoration
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   
   useEffect(() => {
-    window.scrollTo(0, 0);
+    try {
+      if (typeof window !== 'undefined' && window.scrollTo) {
+        window.scrollTo(0, 0);
+      }
+    } catch (e) {}
   }, [pathname]);
 
   return null;
 };
 
-// Wrapper for routes that require login
-const RequireAuth = ({ children }: { children: React.ReactElement }) => {
+const RequireAuth = ({ children }: { children?: React.ReactNode }) => {
   const { user } = useStore();
   const location = useLocation();
 
@@ -35,11 +41,10 @@ const RequireAuth = ({ children }: { children: React.ReactElement }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
-// Wrapper for Admin only routes
-const ProtectedAdminRoute = ({ children }: { children: React.ReactNode }) => {
+const ProtectedAdminRoute = ({ children }: { children?: React.ReactNode }) => {
   const { user } = useStore();
   
   if (!user || user.role !== 'admin') {
@@ -58,6 +63,7 @@ const Layout: React.FC = () => {
       </main>
       <Footer />
       <CartDrawer />
+      <AIConsultant />
     </div>
   );
 };
@@ -67,11 +73,9 @@ const AppRoutes = () => {
       <Router>
         <ScrollToTop />
         <Routes>
-          {/* Public Auth Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* Protected Store Routes */}
           <Route element={
             <RequireAuth>
               <Layout />
@@ -83,10 +87,10 @@ const AppRoutes = () => {
             <Route path="/brands" element={<BrandsPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
             <Route path="/product/:id" element={<ProductDetailsPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             
-            {/* Admin Route */}
             <Route path="/admin" element={
               <ProtectedAdminRoute>
                 <AdminPage />
@@ -94,7 +98,6 @@ const AppRoutes = () => {
             } />
           </Route>
           
-          {/* Catch all redirect to login */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>

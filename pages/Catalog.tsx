@@ -7,7 +7,7 @@ import { Filter, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import { Button } from '../components/Button';
 
 export const CatalogPage: React.FC = () => {
-  const { products, filters, setFilters, addToCart, isLoading } = useStore();
+  const { products, filters, setFilters, addToCart, isLoading, t } = useStore();
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
@@ -28,12 +28,12 @@ export const CatalogPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm sticky top-24">
             <div className="flex items-center gap-2 mb-6 text-slate-900 dark:text-white">
               <Filter className="w-5 h-5" />
-              <h3 className="font-bold text-lg">Фильтры</h3>
+              <h3 className="font-bold text-lg">{t('catalog.filters')}</h3>
             </div>
 
             {/* Category Filter */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Категория</h4>
+              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('catalog.category')}</h4>
               <select 
                 value={filters.category} 
                 onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value as CategoryType }))}
@@ -48,7 +48,7 @@ export const CatalogPage: React.FC = () => {
 
             {/* Brand Filter */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Бренд</h4>
+              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t('catalog.brand')}</h4>
               <div className="space-y-2">
                 {BRANDS.map(brand => (
                   <label key={brand} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer hover:text-brand-500">
@@ -68,7 +68,7 @@ export const CatalogPage: React.FC = () => {
             {/* Price Range */}
             <div className="mb-6">
               <div className="flex justify-between items-center mb-3">
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Цена до</h4>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{t('catalog.priceTo')}</h4>
                 <span className="text-xs text-brand-500 font-bold">{filters.maxPrice} ₽</span>
               </div>
               <input 
@@ -80,10 +80,6 @@ export const CatalogPage: React.FC = () => {
                 onChange={(e) => setFilters(prev => ({ ...prev, maxPrice: Number(e.target.value) }))}
                 className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-brand-500"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-2">
-                <span>0 ₽</span>
-                <span>50000+ ₽</span>
-              </div>
             </div>
 
             <Button 
@@ -92,7 +88,7 @@ export const CatalogPage: React.FC = () => {
               className="w-full"
               onClick={() => setFilters({ category: 'Все', minPrice: 0, maxPrice: 100000, search: '', brand: 'Все' })}
             >
-              Сбросить
+              {t('catalog.reset')}
             </Button>
           </div>
         </aside>
@@ -102,10 +98,10 @@ export const CatalogPage: React.FC = () => {
           {/* Toolbar */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-               Найдено <span className="text-slate-900 dark:text-white font-bold">{filteredProducts.length}</span> товаров
+               {t('catalog.found')} <span className="text-slate-900 dark:text-white font-bold">{filteredProducts.length}</span> {t('catalog.products')}
              </p>
              <div className="flex items-center gap-3">
-               <span className="text-sm text-slate-500 dark:text-slate-400">Сортировка:</span>
+               <span className="text-sm text-slate-500 dark:text-slate-400">{t('catalog.sortBy')}:</span>
                <div className="flex items-center gap-1 text-sm font-medium text-slate-900 dark:text-white cursor-pointer hover:text-brand-500">
                  По популярности <ArrowUpDown className="w-4 h-4" />
                </div>
@@ -122,8 +118,7 @@ export const CatalogPage: React.FC = () => {
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
               <SlidersHorizontal className="w-16 h-16 mx-auto text-slate-300 dark:text-slate-600 mb-4" />
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Товары не найдены</h3>
-              <p className="text-slate-500">Попробуйте изменить параметры фильтрации.</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t('catalog.noFound')}</h3>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">

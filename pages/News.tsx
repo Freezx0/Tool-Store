@@ -4,8 +4,10 @@ import { NewsArticle } from '../types';
 import { Calendar, Tag, ArrowRight, Rss, X, Loader } from 'lucide-react';
 import { Button } from '../components/Button';
 import { Link } from 'react-router-dom';
+import { useStore } from '../store';
 
 export const NewsPage: React.FC = () => {
+  const { t } = useStore();
   const [allNews, setAllNews] = useState<NewsArticle[]>([]);
   const [displayedNews, setDisplayedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,8 +34,8 @@ export const NewsPage: React.FC = () => {
     <div className="container mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-12">
         <div>
-          <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2">Новости Индустрии</h1>
-          <p className="text-slate-500 dark:text-slate-400">Последние обновления от ведущих производителей</p>
+          <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2">{t('news.title')}</h1>
+          <p className="text-slate-500 dark:text-slate-400">{t('news.subtitle')}</p>
         </div>
         <div className="bg-brand-100 dark:bg-brand-900/20 p-3 rounded-full hidden sm:block">
           <Rss className="w-6 h-6 text-brand-600 dark:text-brand-500" />
@@ -60,14 +62,14 @@ export const NewsPage: React.FC = () => {
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                  <span className="bg-brand-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
                     {article.category}
                   </span>
                 </div>
               </div>
               
               <div className="p-8 flex flex-col flex-grow">
-                <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4 font-medium uppercase tracking-wide">
+                <div className="flex items-center gap-4 text-[10px] text-slate-500 dark:text-slate-400 mb-4 font-bold uppercase tracking-widest">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
                     {article.date}
@@ -82,16 +84,16 @@ export const NewsPage: React.FC = () => {
                   {article.title}
                 </h2>
                 
-                <p className="text-slate-600 dark:text-slate-400 mb-6 line-clamp-3 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 line-clamp-3 leading-relaxed">
                   {article.excerpt}
                 </p>
 
                 <div className="mt-auto">
                    <button 
                      onClick={() => setSelectedArticle(article)}
-                     className="inline-flex items-center text-brand-600 dark:text-brand-400 font-bold hover:text-brand-700 dark:hover:text-brand-300 transition-colors"
+                     className="inline-flex items-center text-brand-600 dark:text-brand-400 text-sm font-bold hover:text-brand-700 dark:hover:text-brand-300 transition-colors"
                    >
-                     Читать полностью <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                     {t('common.more')} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                    </button>
                 </div>
               </div>
@@ -103,7 +105,7 @@ export const NewsPage: React.FC = () => {
       {hasMore && !isLoading && (
         <div className="mt-16 text-center">
           <Button variant="outline" size="lg" onClick={handleLoadMore}>
-            Загрузить еще новости
+            {t('news.loadMore')}
           </Button>
         </div>
       )}
@@ -114,7 +116,7 @@ export const NewsPage: React.FC = () => {
           <div className="bg-white dark:bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl relative animate-in zoom-in-95 duration-200">
             <button 
               onClick={() => setSelectedArticle(null)}
-              className="absolute top-4 right-4 p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-red-100 hover:text-red-500 transition-colors z-10"
+              className="absolute top-4 right-4 p-2 bg-slate-100/50 dark:bg-slate-800/50 rounded-full hover:bg-red-500 hover:text-white transition-colors z-10"
             >
               <X className="w-6 h-6" />
             </button>
@@ -127,11 +129,11 @@ export const NewsPage: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
               <div className="absolute bottom-0 left-0 p-8 text-white">
-                <span className="bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">
+                <span className="bg-brand-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">
                   {selectedArticle.category}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-extrabold leading-tight mb-2">{selectedArticle.title}</h2>
-                <div className="flex gap-4 text-sm opacity-80">
+                <div className="flex gap-4 text-xs font-bold uppercase tracking-widest opacity-80">
                   <span>{selectedArticle.date}</span>
                   <span>•</span>
                   <span>{selectedArticle.brand}</span>
@@ -139,7 +141,7 @@ export const NewsPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-8 md:p-12 text-lg text-slate-700 dark:text-slate-300 leading-relaxed space-y-6">
+            <div className="p-8 md:p-12 text-base text-slate-700 dark:text-slate-300 leading-relaxed space-y-6">
               <p className="font-bold text-xl text-slate-900 dark:text-white">
                 {selectedArticle.excerpt}
               </p>
@@ -151,12 +153,12 @@ export const NewsPage: React.FC = () => {
               ))}
 
               <blockquote className="border-l-4 border-brand-500 pl-4 italic text-slate-500 dark:text-slate-400 my-8">
-                "Инновации - это то, что отличает лидера от догоняющего." - Представитель {selectedArticle.brand}
+                "{t('news.innovations')}" — {selectedArticle.brand}
               </blockquote>
             </div>
 
             <div className="p-8 border-t border-slate-100 dark:border-slate-800 flex justify-end">
-              <Button onClick={() => setSelectedArticle(null)}>Закрыть</Button>
+              <Button onClick={() => setSelectedArticle(null)}>{t('common.close')}</Button>
             </div>
           </div>
         </div>

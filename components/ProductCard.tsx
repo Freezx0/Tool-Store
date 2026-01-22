@@ -3,6 +3,7 @@ import { Star, ShoppingCart, Info } from 'lucide-react';
 import { Product } from '../types';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
+import { useStore } from '../store';
 
 interface ProductCardProps {
   product: Product;
@@ -10,18 +11,19 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+  const { t } = useStore();
   return (
     <div className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 flex flex-col h-full overflow-hidden">
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {product.isNew && (
           <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm">
-            Новинка
+            {t('common.new')}
           </span>
         )}
         {product.oldPrice && (
           <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm">
-            Скидка
+            {t('common.sale')}
           </span>
         )}
       </div>
@@ -72,7 +74,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
                   className="w-full"
                 >
                   <Info className="w-4 h-4 mr-2" />
-                  Детали
+                  {t('common.details')}
                 </Button>
              </Link>
              <Button 
@@ -82,7 +84,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
                className="w-full"
              >
                <ShoppingCart className="w-4 h-4 mr-2" />
-               Купить
+               {t('common.buy')}
              </Button>
           </div>
         </div>

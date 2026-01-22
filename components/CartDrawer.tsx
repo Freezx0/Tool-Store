@@ -5,7 +5,7 @@ import { Button } from './Button';
 import { useNavigate } from 'react-router-dom';
 
 export const CartDrawer: React.FC = () => {
-  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity } = useStore();
+  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart, updateQuantity, t } = useStore();
   const navigate = useNavigate();
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -31,7 +31,7 @@ export const CartDrawer: React.FC = () => {
         <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900 z-10">
           <div className="flex items-center gap-2">
             <ShoppingBag className="w-6 h-6 text-brand-500" />
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Корзина</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t('cart.title')}</h2>
             <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold px-2 py-1 rounded-full">
               {cartItems.length}
             </span>
@@ -49,9 +49,9 @@ export const CartDrawer: React.FC = () => {
           {cartItems.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-50">
               <ShoppingBag className="w-16 h-16 text-slate-300 dark:text-slate-600" />
-              <p className="text-lg font-medium text-slate-900 dark:text-white">Ваша корзина пуста</p>
-              <p className="text-sm text-slate-500">Похоже, вы еще ничего не добавили.</p>
-              <Button variant="outline" onClick={() => setIsCartOpen(false)}>Перейти к покупкам</Button>
+              <p className="text-lg font-medium text-slate-900 dark:text-white">{t('cart.empty')}</p>
+              <p className="text-sm text-slate-500">{t('cart.emptyDesc')}</p>
+              <Button variant="outline" onClick={() => setIsCartOpen(false)}>{t('cart.goToShop')}</Button>
             </div>
           ) : (
             cartItems.map(item => (
@@ -102,12 +102,11 @@ export const CartDrawer: React.FC = () => {
         {cartItems.length > 0 && (
           <div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-slate-500 dark:text-slate-400">Итого:</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('cart.total')}:</span>
               <span className="text-2xl font-bold text-slate-900 dark:text-white">{total.toLocaleString()} ₽</span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 text-center">Доставка и налоги рассчитываются при оформлении</p>
             <Button variant="primary" size="lg" className="w-full uppercase tracking-widest" onClick={handleCheckout}>
-              Оформить заказ
+              {t('cart.checkout')}
             </Button>
           </div>
         )}

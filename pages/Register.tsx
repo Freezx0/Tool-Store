@@ -6,7 +6,7 @@ import { Lock, Mail, User, Hammer, ArrowRight } from 'lucide-react';
 import { User as UserType } from '../types';
 
 export const RegisterPage: React.FC = () => {
-  const { login } = useStore();
+  const { login, t } = useStore();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -23,7 +23,7 @@ export const RegisterPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("Пароли не совпадают");
+      alert(t('auth.passwordMismatch'));
       return;
     }
 
@@ -42,7 +42,6 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex bg-white dark:bg-slate-950">
-      {/* Left Side - Image & Branding */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-slate-900">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-40"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/50"></div>
@@ -57,38 +56,37 @@ export const RegisterPage: React.FC = () => {
 
           <div className="space-y-6">
             <h2 className="text-5xl font-bold leading-tight">
-              Создайте аккаунт и <span className="text-brand-500">начните работу</span>
+              {t('auth.benefits.title')}
             </h2>
             <ul className="space-y-4 text-lg text-slate-300">
               <li className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-brand-500" /> Отслеживание заказов
+                <div className="w-2 h-2 rounded-full bg-brand-500" /> {t('auth.benefits.track')}
               </li>
               <li className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-brand-500" /> История покупок
+                <div className="w-2 h-2 rounded-full bg-brand-500" /> {t('auth.benefits.history')}
               </li>
               <li className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-brand-500" /> Персональные скидки
+                <div className="w-2 h-2 rounded-full bg-brand-500" /> {t('auth.benefits.discounts')}
               </li>
             </ul>
           </div>
 
           <div className="text-sm text-slate-500">
-            © 2026 ToolStore Pro. All rights reserved.
+            {t('footer.copyright')}
           </div>
         </div>
       </div>
 
-      {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12 overflow-y-auto">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Регистрация</h1>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">Заполните форму для создания нового аккаунта</p>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{t('auth.registerTitle')}</h1>
+            <p className="mt-2 text-slate-600 dark:text-slate-400">{t('auth.registerDesc')}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-900 dark:text-white">Имя</label>
+              <label className="text-sm font-semibold text-slate-900 dark:text-white">{t('checkout.firstName')}</label>
               <div className="relative">
                 <User className="w-5 h-5 absolute left-3 top-3.5 text-slate-400" />
                 <input 
@@ -96,7 +94,7 @@ export const RegisterPage: React.FC = () => {
                   type="text" 
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all font-medium text-slate-900 dark:text-white"
-                  placeholder="Иван Иванов"
+                  placeholder={t('auth.namePlaceholder')}
                   required
                 />
               </div>
@@ -111,7 +109,7 @@ export const RegisterPage: React.FC = () => {
                   type="email" 
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all font-medium text-slate-900 dark:text-white"
-                  placeholder="name@company.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   required
                 />
               </div>
@@ -119,7 +117,7 @@ export const RegisterPage: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-slate-900 dark:text-white">Пароль</label>
+                <label className="text-sm font-semibold text-slate-900 dark:text-white">{t('auth.password')}</label>
                 <div className="relative">
                   <Lock className="w-5 h-5 absolute left-3 top-3.5 text-slate-400" />
                   <input 
@@ -134,7 +132,7 @@ export const RegisterPage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-slate-900 dark:text-white">Подтверждение</label>
+                <label className="text-sm font-semibold text-slate-900 dark:text-white">{t('auth.passwordConfirm')}</label>
                 <div className="relative">
                   <Lock className="w-5 h-5 absolute left-3 top-3.5 text-slate-400" />
                   <input 
@@ -158,16 +156,16 @@ export const RegisterPage: React.FC = () => {
                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
               ) : (
                 <div className="flex items-center justify-center gap-2">
-                  Создать аккаунт <ArrowRight className="w-5 h-5" />
+                  {t('auth.regBtn')} <ArrowRight className="w-5 h-5" />
                 </div>
               )}
             </Button>
           </form>
 
           <p className="text-center text-slate-600 dark:text-slate-400 mt-8">
-            Уже есть аккаунт?{' '}
+            {t('auth.hasAccount')}{' '}
             <Link to="/login" className="text-brand-600 font-bold hover:text-brand-500 hover:underline">
-              Войти
+              {t('nav.login')}
             </Link>
           </p>
         </div>

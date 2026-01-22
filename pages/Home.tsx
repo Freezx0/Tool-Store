@@ -7,7 +7,7 @@ import { CategoryType } from '../types';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const HomePage: React.FC = () => {
-  const { setFilters } = useStore();
+  const { setFilters, t } = useStore();
   const navigate = useNavigate();
 
   const handleCategoryClick = (cat: string) => {
@@ -22,7 +22,7 @@ export const HomePage: React.FC = () => {
       {/* Categories Section */}
       <section className="py-16 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-10 text-center">Популярные категории</h2>
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-10 text-center">{t('home.popular')}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {CATEGORIES.map((cat) => (
               <button
@@ -45,10 +45,10 @@ export const HomePage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Truck, title: "Бесплатная доставка", desc: "При заказе от 5000 ₽" },
-              { icon: ShieldCheck, title: "Гарантия качества", desc: "2 года от производителя" },
-              { icon: CheckCircle, title: "100% Оригинал", desc: "Сертифицированные товары" },
-              { icon: Clock, title: "Поддержка 24/7", desc: "Консультации экспертов" },
+              { icon: Truck, title: t('home.benefits.shipping'), desc: t('home.benefits.shippingDesc') },
+              { icon: ShieldCheck, title: t('home.benefits.warranty'), desc: t('home.benefits.warrantyDesc') },
+              { icon: CheckCircle, title: t('home.benefits.original'), desc: t('home.benefits.originalDesc') },
+              { icon: Clock, title: t('home.benefits.support'), desc: t('home.benefits.supportDesc') },
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4">
                 <div className="p-3 bg-white/10 rounded-lg">

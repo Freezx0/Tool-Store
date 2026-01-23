@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, CartItem, FilterState, Order, User } from './types';
 import { fetchProducts } from './services/mockData';
@@ -69,7 +68,7 @@ const storage = new SafeStorage();
 
 export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [brandColor, setBrandColorState] = useState('249 115 22'); // Default Orange
+  const [brandColor, setBrandColorState] = useState('249 115 22');
   const [language, setLanguageState] = useState<Language>('ru');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -82,13 +81,20 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   });
 
   const t = (path: string) => {
-    const keys = path.split('.');
-    let result: any = translations[language];
-    for (const key of keys) {
-      if (!result || result[key] === undefined) return path;
-      result = result[key];
+    try {
+      const keys = path.split('.');
+      let result: any = translations[language] || translations['en'];
+      for (const key of keys) {
+        if (!result || result[key] === undefined) {
+          console.warn(`Translation key missing: ${path} for language: ${language}`);
+          return path;
+        }
+        result = result[key];
+      }
+      return result;
+    } catch (e) {
+      return path;
     }
-    return result;
   };
 
   const setLanguage = (lang: Language) => {
@@ -117,7 +123,7 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     try {
       const savedLang = storage.getItem('toolstore-lang') as Language;
-      if (savedLang) setLanguageState(savedLang);
+      if (savedLang && ['ru', 'en', 'uz'].includes(savedLang)) setLanguageState(savedLang);
       
       const savedColor = storage.getItem('toolstore-color');
       if (savedColor) {

@@ -86,7 +86,7 @@ export const RegisterPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-900 dark:text-white">{t('checkout.firstName')}</label>
+              <label className="text-sm font-semibold text-slate-900 dark:text-white">{t('common.name')}</label>
               <div className="relative">
                 <User className="w-5 h-5 absolute left-3 top-3.5 text-slate-400" />
                 <input 

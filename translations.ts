@@ -6,7 +6,7 @@ export const translations = {
       buy: "Купить",
       details: "Детали",
       loading: "Загрузка...",
-      save: "Сохранить изменения",
+      save: "Сохранить",
       delete: "Удалить",
       cancel: "Отмена",
       send: "Отправить",
@@ -14,7 +14,8 @@ export const translations = {
       new: "Новинка",
       sale: "Скидка",
       close: "Закрыть",
-      apply: "Применить"
+      apply: "Применить",
+      name: "Имя"
     },
     nav: {
       catalog: "Каталог",
@@ -101,7 +102,7 @@ export const translations = {
         date: "Дата",
         customer: "Покупатель",
         items: "Состав",
-        status: "Status",
+        status: "Статус",
         noOrders: "Заказов пока нет",
         paid: "Оплачено"
       }
@@ -236,7 +237,8 @@ export const translations = {
       new: "New",
       sale: "Sale",
       close: "Close",
-      apply: "Apply"
+      apply: "Apply",
+      name: "Name"
     },
     nav: {
       catalog: "Catalog",
@@ -458,7 +460,8 @@ export const translations = {
       new: "Yangi",
       sale: "Chegirma",
       close: "Yopish",
-      apply: "Qo'llash"
+      apply: "Qo'llash",
+      name: "Ism"
     },
     nav: {
       catalog: "Katalog",

@@ -1,5 +1,6 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Product, CartItem, FilterState, Order, User } from './types';
+import { Product, CartItem, FilterState, Order, User, Review } from './types';
 import { fetchProducts } from './services/mockData';
 import { translations } from './translations';
 
@@ -32,32 +33,38 @@ interface StoreContextType {
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
+  addReview: (productId: number, review: Review) => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 class SafeStorage {
   private memory = new Map<string, string>();
+
   getItem(key: string): string | null {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) return window.localStorage.getItem(key);
+      if (typeof window !== 'undefined') {
+        // First try the real/polyfilled localStorage
+        const value = window.localStorage.getItem(key);
+        if (value !== null) return value;
+      }
     } catch (e) {}
     return this.memory.get(key) || null;
   }
+
   setItem(key: string, value: string): void {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
+      if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, value);
-        return;
       }
     } catch (e) {}
     this.memory.set(key, value);
   }
+
   removeItem(key: string): void {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
+      if (typeof window !== 'undefined') {
         window.localStorage.removeItem(key);
-        return;
       }
     } catch (e) {}
     this.memory.delete(key);
@@ -81,20 +88,19 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   });
 
   const t = (path: string) => {
-    try {
-      const keys = path.split('.');
-      let result: any = translations[language] || translations['en'];
+    const keys = path.split('.');
+    
+    const getValue = (lang: Language) => {
+      let result: any = translations[lang];
       for (const key of keys) {
-        if (!result || result[key] === undefined) {
-          console.warn(`Translation key missing: ${path} for language: ${language}`);
-          return path;
-        }
+        if (!result || result[key] === undefined) return null;
         result = result[key];
       }
       return result;
-    } catch (e) {
-      return path;
-    }
+    };
+
+    // Try current language, then English, then return path
+    return getValue(language) || getValue('en') || path;
   };
 
   const setLanguage = (lang: Language) => {
@@ -132,13 +138,31 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       }
 
       const savedCart = storage.getItem('toolstore-cart');
-      if (savedCart) setCartItems(JSON.parse(savedCart));
+      if (savedCart) {
+        try {
+          setCartItems(JSON.parse(savedCart));
+        } catch (e) {
+          storage.removeItem('toolstore-cart');
+        }
+      }
 
       const savedOrders = storage.getItem('toolstore-orders');
-      if (savedOrders) setOrders(JSON.parse(savedOrders));
+      if (savedOrders) {
+        try {
+          setOrders(JSON.parse(savedOrders));
+        } catch (e) {
+          storage.removeItem('toolstore-orders');
+        }
+      }
 
       const savedUser = storage.getItem('toolstore-user');
-      if (savedUser) setUser(JSON.parse(savedUser));
+      if (savedUser) {
+        try {
+          setUser(JSON.parse(savedUser));
+        } catch (e) {
+          storage.removeItem('toolstore-user');
+        }
+      }
     } catch (e) {}
   }, []);
 
@@ -176,6 +200,18 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     storage.removeItem('toolstore-user');
   };
 
+  const addReview = (productId: number, review: Review) => {
+    setProducts(prev => prev.map(p => {
+      if (p.id === productId) {
+        return {
+          ...p,
+          reviews: [review, ...(p.reviews || [])]
+        };
+      }
+      return p;
+    }));
+  };
+
   return (
     <StoreContext.Provider value={{
       isDarkMode, toggleTheme: () => setIsDarkMode(!isDarkMode),
@@ -184,7 +220,7 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       isCartOpen, setIsCartOpen,
       products, setProducts, cartItems, addToCart, removeFromCart, updateQuantity, clearCart,
       filters, setFilters, isLoading, addProduct, deleteProduct, orders, addOrder,
-      user, login, logout
+      user, login, logout, addReview
     }}>
       {children}
     </StoreContext.Provider>

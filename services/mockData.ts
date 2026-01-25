@@ -12,7 +12,11 @@ export const products: Product[] = [
     isNew: true,
     stock: 45,
     brand: "DeWalt",
-    description: "Мощная ударная дрель для профессиональных работ. Бесщеточный двигатель, 2 аккумулятора в комплекте."
+    description: "Мощная ударная дрель для профессиональных работ. Бесщеточный двигатель, 2 аккумулятора в комплекте.",
+    reviews: [
+      { id: 'r1', userName: 'Александр', rating: 5, comment: 'Отличный инструмент, DeWalt как всегда на высоте!', date: '2026-05-15T10:00:00Z' },
+      { id: 'r2', userName: 'Михаил', rating: 4, comment: 'Мощности хватает за глаза, но кейс мог бы быть и побольше.', date: '2026-05-10T14:30:00Z' }
+    ]
   },
   {
     id: 2,
@@ -23,7 +27,10 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=800&q=80",
     stock: 12,
     brand: "Makita",
-    description: "Высокоточная циркулярная пила для чистого реза. Идеальна для деревообработки."
+    description: "Высокоточная циркулярная пила для чистого реза. Идеальна для деревообработки.",
+    reviews: [
+      { id: 'r3', userName: 'Игорь', rating: 4, comment: 'Пилит ровно, но подошва требует точной настройки из коробки.', date: '2026-04-20T12:00:00Z' }
+    ]
   },
   {
     id: 3,
@@ -35,7 +42,10 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=800&q=80",
     stock: 20,
     brand: "Stanley",
-    description: "Универсальный набор инструментов для автосервиса и дома. Хромованадиевая сталь."
+    description: "Универсальный набор инструментов для автосервиса и дома. Хромованадиевая сталь.",
+    reviews: [
+      { id: 'r4', userName: 'Дмитрий', rating: 5, comment: 'Для дома идеальный вариант, все самые нужные ключи в одном месте.', date: '2026-05-01T09:15:00Z' }
+    ]
   },
   {
     id: 4,
@@ -58,7 +68,10 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?auto=format&fit=crop&w=800&q=80",
     stock: 5,
     brand: "Bosch",
-    description: "Легендарный перфоратор. Надежность, проверенная временем. Подходит для бетона и камня."
+    description: "Легендарный перфоратор. Надежность, проверенная временем. Подходит для бетона и камня.",
+    reviews: [
+      { id: 'r5', userName: 'Виктор', rating: 5, comment: 'Трудяга. Сверлит бетон как масло.', date: '2026-03-12T11:45:00Z' }
+    ]
   },
   {
     id: 6,

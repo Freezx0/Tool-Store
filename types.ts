@@ -1,3 +1,11 @@
+export interface Review {
+  id: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -10,6 +18,7 @@ export interface Product {
   stock: number;
   brand: string;
   description?: string;
+  reviews?: Review[];
 }
 
 export interface CartItem extends Product {

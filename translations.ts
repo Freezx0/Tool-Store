@@ -66,7 +66,14 @@ export const translations = {
       noDesc: "Описание товара временно отсутствует.",
       addToCart: "В корзину",
       guarantee: "Официальная гарантия",
-      fastShipping: "Быстрая доставка"
+      fastShipping: "Быстрая доставка",
+      reviews: "Отзывы покупателей",
+      noReviews: "Отзывов пока нет. Станьте первым!",
+      writeReview: "Написать отзыв",
+      reviewerName: "Ваше имя",
+      reviewRating: "Оценка",
+      reviewText: "Ваш комментарий",
+      submitReview: "Опубликовать отзыв"
     },
     cart: {
       title: "Корзина",
@@ -220,6 +227,30 @@ export const translations = {
       subtitle: "Последние события",
       loadMore: "Показать еще",
       innovations: "Инновации — наш приоритет."
+    },
+    contacts: {
+      title: "Наши Контакты",
+      desc: "Посетите наш флагманский магазин в Москве. Профессиональные консультанты, тест-драйв инструмента и сертифицированный сервисный центр.",
+      store: "Офлайн Магазин",
+      address: "Москва, Пресненская наб., 12",
+      addressSub: "ММДЦ «Москва-Сити», Башня Федерация",
+      hours: "Режим работы",
+      weekdays: "Пн-Пт",
+      weekends: "Сб-Вс",
+      formTitle: "Напишите нам",
+      formName: "Имя",
+      formMessage: "Ваше сообщение...",
+      formSend: "Отправить",
+      formSuccess: "Ваше сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.",
+      parking: "Парковка",
+      parkingDesc: "Бесплатная парковка для клиентов магазина в течение 2-х часов.",
+      service: "Сервис",
+      serviceDesc: "Принимаем инструмент на диагностику и ремонт любой сложности.",
+      payment: "Оплата",
+      paymentDesc: "Принимаем карты, наличные и безналичный расчет для юр. лиц.",
+      howToGet: "Как добраться?",
+      metro: "Метро 'Выставочная', выход 4",
+      openMap: "Открыть карту"
     }
   },
   en: {
@@ -289,7 +320,14 @@ export const translations = {
       noDesc: "No description available.",
       addToCart: "Add to cart",
       guarantee: "Official warranty",
-      fastShipping: "Fast delivery"
+      fastShipping: "Fast delivery",
+      reviews: "Customer Reviews",
+      noReviews: "No reviews yet. Be the first!",
+      writeReview: "Write a review",
+      reviewerName: "Your name",
+      reviewRating: "Rating",
+      reviewText: "Your comment",
+      submitReview: "Post Review"
     },
     cart: {
       title: "Cart",
@@ -443,6 +481,30 @@ export const translations = {
       subtitle: "Latest Events",
       loadMore: "Load more",
       innovations: "Innovation is our priority."
+    },
+    contacts: {
+      title: "Contact Us",
+      desc: "Visit our flagship store in Moscow. Professional consultants, tool test drives, and certified service center.",
+      store: "Offline Store",
+      address: "Moscow, Presnenskaya nab., 12",
+      addressSub: "MIBC 'Moscow City', Federation Tower",
+      hours: "Working Hours",
+      weekdays: "Mon-Fri",
+      weekends: "Sat-Sun",
+      formTitle: "Write to Us",
+      formName: "Name",
+      formMessage: "Your message...",
+      formSend: "Send",
+      formSuccess: "Your message has been sent successfully! We will contact you soon.",
+      parking: "Parking",
+      parkingDesc: "Free parking for store customers for 2 hours.",
+      service: "Service",
+      serviceDesc: "Accepting tools for diagnostics and repairs of any complexity.",
+      payment: "Payment",
+      paymentDesc: "Accepting cards, cash, and bank transfers for legal entities.",
+      howToGet: "How to get here?",
+      metro: "Metro 'Vystavochnaya', exit 4",
+      openMap: "Open Map"
     }
   },
   uz: {
@@ -512,7 +574,14 @@ export const translations = {
       noDesc: "Tavsif mavjud emas.",
       addToCart: "Savatga",
       guarantee: "Rasmiy kafolat",
-      fastShipping: "Tezkor yetkazib berish"
+      fastShipping: "Tezkor yetkazib berish",
+      reviews: "Mijozlar sharhlari",
+      noReviews: "Hozircha sharhlar yo'q. Birinchi bo'ling!",
+      writeReview: "Sharh yozish",
+      reviewerName: "Ismingiz",
+      reviewRating: "Baholash",
+      reviewText: "Izohingiz",
+      submitReview: "Sharhni yuborish"
     },
     cart: {
       title: "Savat",
@@ -628,7 +697,7 @@ export const translations = {
     },
     footer: {
       desc: "Professional uskunalar olamidagi ishonchli hamkoringiz.",
-      navTitle: "Navigatsiya",
+      navTitle: "Navigation",
       customerTitle: "Mijozlarga",
       contactsTitle: "Biz bilan bog'laning",
       copyright: "© 2026 ToolStore Pro. Barcha huquqlar himoyalangan.",
@@ -666,6 +735,30 @@ export const translations = {
       subtitle: "So'nggi voqealar",
       loadMore: "Yana ko'rsatish",
       innovations: "Innovatsiya — bizning ustuvorligimiz."
+    },
+    contacts: {
+      title: "Biz bilan bog'laning",
+      desc: "Moskvadagi flagman do'konimizga tashrif buyuring. Professional maslahatchilar, asboblarni test-drayv qilish va sertifikatlangan servis markazi.",
+      store: "Oflayn Do'kon",
+      address: "Moskva, Presnenskaya nab., 12",
+      addressSub: "MMDSH 'Moskva-Siti', Federatsiya Minorasi",
+      hours: "Ish vaqti",
+      weekdays: "Du-Ju",
+      weekends: "Sha-Yak",
+      formTitle: "Bizga yozing",
+      formName: "Ism",
+      formMessage: "Xabaringiz...",
+      formSend: "Yuborish",
+      formSuccess: "Xabaringiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.",
+      parking: "To'xtash joyi",
+      parkingDesc: "Do'kon mijozlari uchun 2 soat davomida bepul to'xtash joyi.",
+      service: "Servis",
+      serviceDesc: "Har qanday murakkablikdagi asboblarni diagnostika va ta'mirlash uchun qabul qilamiz.",
+      payment: "To'lov",
+      paymentDesc: "Kartalar, naqd pul va yuridik shaxslar uchun o'tkazma orqali to'lovlarni qabul qilamiz.",
+      howToGet: "Qanday yetib kelish mumkin?",
+      metro: "'Vystavochnaya' metro bekati, 4-chi chiqish",
+      openMap: "Xaritani ochish"
     }
   }
 };

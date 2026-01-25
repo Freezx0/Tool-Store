@@ -12,7 +12,7 @@
       
       /* Smooth transitions for theme and color changes */
       * {
-        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.1s ease;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color-0.1s ease;
       }
 
       /* Custom Scrollbar using Brand Color */
@@ -32,25 +32,40 @@
       }
     </style>
     <script>
+      // Process polyfill for browser environment safety
+      window.process = window.process || { env: { API_KEY: '' } };
+      
+      // Extremely robust Storage polyfill to prevent "SecurityError: The operation is insecure"
       (function() {
-        function patchStorage(name) {
+        function createSafeStorage() {
+          var data = {};
+          return {
+            getItem: function(k) { return data.hasOwnProperty(k) ? data[k] : null; },
+            setItem: function(k, v) { data[k] = String(v); },
+            removeItem: function(k) { delete data[k]; },
+            clear: function() { data = {}; },
+            key: function(i) { var keys = Object.keys(data); return keys[i] || null; },
+            get length() { return Object.keys(data).length; }
+          };
+        }
+
+        function patch(name) {
           try {
-            var key = '__test__';
-            window[name].setItem(key, key);
-            window[name].removeItem(key);
+            var testKey = '__storage_test__';
+            window[name].setItem(testKey, testKey);
+            window[name].removeItem(testKey);
           } catch (e) {
-            var data = {};
-            Object.defineProperty(window, name, { value: {
-              getItem: function(k) { return data[k] || null; },
-              setItem: function(k, v) { data[k] = String(v); },
-              removeItem: function(k) { delete data[k]; },
-              clear: function() { data = {}; },
-              length: 0
-            }, configurable: true });
+            console.warn('Storage ' + name + ' is inaccessible. Using memory polyfill.');
+            Object.defineProperty(window, name, {
+              value: createSafeStorage(),
+              configurable: true,
+              writable: true
+            });
           }
         }
-        patchStorage('localStorage');
-        patchStorage('sessionStorage');
+        
+        patch('localStorage');
+        patch('sessionStorage');
       })();
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
